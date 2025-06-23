@@ -104,3 +104,24 @@ taskInput.addEventListener("keyup", e => {
         showTodo(document.querySelector("span.active").id);
     }
 });
+function addTask() {
+    let userTask = taskInput.value.trim();
+    if (userTask) {
+        if (!isEditTask) {
+            todos = !todos ? [] : todos;
+            let taskInfo = { name: userTask, status: "pending" };
+            todos.push(taskInfo);
+        } else {
+            isEditTask = false;
+            todos[editId].name = userTask;
+        }
+        taskInput.value = "";
+        localStorage.setItem("todo-list", JSON.stringify(todos));
+        showTodo(document.querySelector("span.active").id);
+    }
+}
+taskInput.addEventListener("keyup", e => {
+    if (e.key === "Enter") addTask();
+});
+
+addBtn.addEventListener("click", addTask); 
